@@ -1,5 +1,11 @@
 <project basedir="." default="default" name="Textmate to Sublime Transformer">
 	
+	<target name="default">
+		<tm2subl textmate-src="TextMate" sublime-out="Sublime Text" snippet-transform-file="tm2subl.xsl" convert-to-tabs="true" />
+	</target>
+	
+	
+	
 	<macrodef name="tm2subl" description="This converts one (1) TextMate Bundle into one (1) Sublime Text Package.">
 		<attribute name="textmate-src"                   description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'." />
 		<attribute name="sublime-out"                    description="The root folder to put the Sublime Text files." />
@@ -104,9 +110,4 @@
 			</replaceregexp>
 		</sequential>
 	</macrodef>
-	
-	
-	<target name="default">
-		<tm2subl textmate-src="TextMate" sublime-out="Sublime Text" snippet-transform-file="tm2subl.xsl" convert-to-tabs="true" />
-	</target>
 </project>
