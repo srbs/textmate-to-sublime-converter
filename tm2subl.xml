@@ -6,7 +6,7 @@
 		<attribute name="destdir"                                   description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'." />
 		<attribute name="srcdir"                                    description="The root folder to put the Sublime Text files." />
 		<attribute name="snippet-transformer" default="tm2subl.xsl" description="The file that transforms the snippets." />
-		<attribute name="convert-to-tabs"     default="true"        description="Setting for changing the spaces to tabs in the resulting snippet xml. (default: true)" />
+		<attribute name="convert-to-tabs"     default="false"       description="Setting for changing the spaces to tabs in the resulting snippet xml. (default: true)" />
 		
 		<sequential>
 			<!-- clean -->
