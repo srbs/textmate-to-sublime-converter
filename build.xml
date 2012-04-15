@@ -2,9 +2,10 @@
 	
 	<target name="default">
 		<tm2subl textmate-src="TextMate" sublime-out="Sublime Text" snippet-transform-file="tm2subl.xsl" convert-to-tabs="true" />
+		<!--<tm2subl-snippet destdir="sublout" transformer="tm2subl.xsl" convert-to-tabs="true">
+			<fileset dir="TextMate/Snippets" includes="*.tmSnippet" />
+		</tm2subl-snippet>-->
 	</target>
-	
-	
 	
 	<macrodef name="tm2subl" description="This converts one (1) TextMate Bundle into one (1) Sublime Text Package.">
 		<attribute name="textmate-src"                   description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'." />
@@ -28,11 +29,46 @@
 				</fileset>
 			</copy>
 			
+			<tm2subl-snippet destdir="@{sublime-out}" transformer="@{snippet-transform-file}" convert-to-tabs="@{convert-to-tabs}" flatten="false">
+				<fileset dir="@{textmate-src}" includes="**/*.tmSnippet" />
+			</tm2subl-snippet>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="tm2subl-snippet"                      description="This converts TextMate snippets into Sublime Text snippets">
+		<attribute name="destdir"                         description="The destination directory the Sublime Text snippets go in." />
+		<attribute name="transformer"                     description="The XSLT file that transforms the snippet." />
+		<attribute name="convert-to-tabs" default="false" description="Setting for converting the spaces in the snippet xml to tabs. (default: false)" />
+		<attribute name="force"           default="false" description="Recreate target files regardless on if they are newer than their source file." />
+		<attribute name="flatten"         default="true"  description="Flatten the hierarchy " />
+		<element   name="files"          implicit="yes"   description="A list of TextMate snippet files to convert." />
+		
+		<sequential>
+			<!-- time stuff used to only apply the convert-to-tabs setting to newly created files -->
+			<local name="timepattern" />
+			<property name="timepattern" value="yyyy/MM/dd HH:mm:ss" />
+			<local name="time" />
+			<tstamp>
+				<format property="time" pattern="${timepattern}" offset="-1" unit="second" />
+				<!-- -1 second offset to guarantee that the generated files are included -->
+			</tstamp>
+			
+			
+			<!-- verify dir exists -->
+			<mkdir dir="@{destdir}" />
+			
+			
+			<local name="maptype" />
+			<condition property="maptype" value="flatten" else="identity">
+				<istrue value="@{flatten}" />
+			</condition>
+			
 			<!-- copy & transform snippets -->
-			<xslt basedir="@{textmate-src}" destdir="@{sublime-out}" style="@{snippet-transform-file}">
+			<xslt destdir="@{destdir}" style="@{transformer}" force="@{force}">
+				<files/>
 				<!-- flatten & change extension -->
 				<chainedmapper>
-					<flattenmapper/>
+					<mapper type="${maptype}" />
 					<globmapper from="*.tmSnippet" to="*.sublime-snippet" />
 				</chainedmapper>
 			</xslt>
@@ -42,7 +78,7 @@
 			
 			<!-- Read the file & find out how many spaces are at the beginning of the lines. -->
 			<local name="quantity" />
-			<loadfile property="quantity" srcfile="@{snippet-transform-file}">
+			<loadfile property="quantity" srcfile="@{transformer}">
 				<!-- get the number of spaces the transformer is set to create -->
 				<filterchain>
 					<!-- get only the line containing the indent-amount setting -->
@@ -106,7 +142,10 @@
 			
 			<!-- Replace the spaces with tabs. -->
 			<replaceregexp match="${convert}^ &#123;${quantity}&#125;&lt;" replace="&#09;&lt;" byline="true">
-				<fileset dir="@{sublime-out}" includes="*.sublime-snippet" />
+				<fileset dir="@{destdir}" includes="*.sublime-snippet">
+					<!-- only the files we recently changed -->
+					<date datetime="${time}" when="after" pattern="${timepattern}" />
+				</fileset>
 			</replaceregexp>
 		</sequential>
 	</macrodef>
