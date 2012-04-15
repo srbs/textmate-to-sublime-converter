@@ -1,4 +1,4 @@
-<project basedir="." default="all" name="Textmate bundle to Sublime Text package Transformer">
+<project basedir="." default="all" name="Textmate bundle to Sublime Text package transformer">
 	<include file="../tm2subl.xml" />
 	
 	<target name="all">
