@@ -99,9 +99,9 @@
 			<!-- Here we declare a property to be local so we can set it's value (and to not interfere anywhere else) -->
 			<local name="convert" />
 			
-			<!-- Here we set the value of ${convert} to be 'true' ONLY when the user DOESN'T want to replace the values -->
-			<condition property="convert">
-				<not><!-- This only negates the below to follow the above rule -->
+			<!-- Here we set the value of ${convert} to be '' when the user wants to replace the values -->
+			<!-- Otherwise (else) set it to 'fail' do not replace the values -->
+			<condition property="convert" value="" else="fail">
 					<and>
 						<!-- ONLY true/t values are accepted as true -->
 						<or>
@@ -114,23 +114,17 @@
 							<equals arg1="0" arg2="${quantity}" />
 						</not>
 					</and>
-				</not>
 				
-				<!--convert = (convert-to-tabs==true && (quantity > 0))? "": "true"-->
+				<!--convert = (convert-to-tabs==true && (quantity > 0))? "": "fail"-->
 			</condition>
-			
-			<!-- Otherwise, we set the value to an empty string
-			     So that when it is expanded, it comes out '' instead of '${convert}' -->
-			<property name="convert" value="" />
 			
 			<!-- The ${convert} variable is used in a following regular expression in a location that will guarantee failure
 			     when/if text is inserted there -->
 			
-			<!--<echo message="Check for existance for non-true & non-existance for true: -${convert}-" />-->
-			
 			<!-- The only downfall of not using targets/depends or ant-contib if is that the
 			     loadfile & replaceregexp tasks have to executed no matter what. -->
-			     
+			
+			<!--<echo message="Check for existance for non-true & non-existance for true: -${convert}-" />-->     
 <!-- srbs style if hack ends here -->
 			
 			
