@@ -5,8 +5,8 @@
 	<macrodef name="tm2subl" description="This converts one (1) TextMate Bundle into one (1) Sublime Text Package.">
 		<attribute name="destdir"                                   description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'." />
 		<attribute name="srcdir"                                    description="The root folder to put the Sublime Text files." />
-		<attribute name="snippet-transformer" default="tm2subl.xsl" description="The file that transforms the snippets." />
-		<attribute name="convert-to-tabs"     default="false"       description="Setting for changing the spaces to tabs in the resulting snippet xml. (default: true)" />
+		<attribute name="snippet-transformer" default="tm2subl.xsl" description="The file that transforms the snippets. (default: tm2subl.xsl)" />
+		<attribute name="convert-to-tabs"     default="false"       description="Setting for changing the spaces to tabs in the resulting snippet xml. (default: false)" />
 		
 		<sequential>
 			<!-- clean -->
@@ -30,12 +30,12 @@
 		</sequential>
 	</macrodef>
 	
-	<macrodef name="tm2subl-snippet"                            description="This converts TextMate snippets into Sublime Text snippets">
+	<macrodef name="tm2subl-snippet" description="This converts TextMate snippets into Sublime Text snippets">
 		<attribute name="destdir"                               description="The destination directory the Sublime Text snippets go in." />
-		<attribute name="transformer"     default="tm2subl.xsl" description="The XSLT file that transforms the snippet." />
+		<attribute name="transformer"     default="tm2subl.xsl" description="The XSLT file that transforms the snippet. (default: tm2subl.xsl)" />
 		<attribute name="convert-to-tabs" default="false"       description="Setting for converting the spaces in the snippet xml to tabs. (default: false)" />
-		<attribute name="force"           default="false"       description="Recreate target files regardless on if they are newer than their source file." />
-		<attribute name="flatten"         default="true"        description="Flatten the hierarchy " />
+		<attribute name="force"           default="false"       description="Recreate target files regardless on if they are newer than their source file. (default: false)" />
+		<attribute name="flatten"         default="true"        description="Flatten the hierarchy. (default: true)" />
 		<!-- for nested fileset's -->
 		<element   name="files"          implicit="yes"         description="A list of TextMate snippet files to convert." />
 		
@@ -97,7 +97,7 @@
 			<property name="quantity" value="0" />
 			
 			
-<!-- srbs style if hack starts here -->
+			<!-- srbs style if hack starts here -->
 			
 			<!-- Here we declare a property to be local so we can set it's value (and to not interfere anywhere else) -->
 			<local name="convert" />
@@ -128,7 +128,6 @@
 			     loadfile & replaceregexp tasks have to executed no matter what. -->
 			
 			<!--<echo message="Check for existance for non-true & non-existance for true: -${convert}-" />-->     
-<!-- srbs style if hack ends here (but includes the regex match) -->
 			
 			
 			<!-- Replace the spaces with tabs. -->
