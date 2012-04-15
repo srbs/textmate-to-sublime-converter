@@ -1,0 +1,13 @@
+<project basedir="." default="all" name="Textmate bundle to Sublime Text package Transformer">
+	<include file="tm2subl.xml" />
+	
+	<target name="all">
+		<tm2subl destdir="Sublime Text" srcdir="TextMate" />
+	</target>
+	
+	<target name="snippetsonly">
+		<tm2subl-snippet destdir="Sublime Text" flatten="true" convert-to-tabs="true">
+			<fileset dir="TextMate" includes="**/*.tmSnippet" />
+		</tm2subl-snippet>
+	</target>
+</project>
