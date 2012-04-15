@@ -1,4 +1,7 @@
-<project basedir="." default="default" name="Textmate to Sublime Transformer">
+<!-- (C) 2010 David "srbs" Forrest, ZLIB license -->
+<!-- somerandombystander (at) gmail (dot) com -->
+<!-- http://www.opensource.org/licenses/zlib-license.php -->
+<project basedir="." name="Textmate to Sublime Transformer">
 	<macrodef name="tm2subl" description="This converts one (1) TextMate Bundle into one (1) Sublime Text Package.">
 		<attribute name="destdir"                                   description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'." />
 		<attribute name="srcdir"                                    description="The root folder to put the Sublime Text files." />
@@ -125,7 +128,7 @@
 			     loadfile & replaceregexp tasks have to executed no matter what. -->
 			
 			<!--<echo message="Check for existance for non-true & non-existance for true: -${convert}-" />-->     
-<!-- srbs style if hack ends here -->
+<!-- srbs style if hack ends here (but includes the regex match) -->
 			
 			
 			<!-- Replace the spaces with tabs. -->
