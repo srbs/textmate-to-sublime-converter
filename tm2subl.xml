@@ -21,7 +21,7 @@
 			</copy>
 			
 			<!-- transform & copy all snippets -->
-			<tm2subl-snippet destdir="@{srcdir}" transformer="@{snippet-transformer}" convert-to-tabs="@{convert-to-tabs}" flatten="false">
+			<tm2subl-snippet destdir="@{srcdir}" transformer="@{snippet-transformer}" convert-to-tabs="@{convert-to-tabs}">
 				<fileset dir="@{destdir}" includes="**/*.tmSnippet" />
 			</tm2subl-snippet>
 		</sequential>
