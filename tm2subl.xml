@@ -7,6 +7,7 @@
 		<attribute name="srcdir"                                    description="The root folder to put the Sublime Text files." />
 		<attribute name="snippet-transformer" default="tm2subl.xsl" description="The file that transforms the snippets. (default: tm2subl.xsl)" />
 		<attribute name="convert-to-tabs"     default="false"       description="Setting for changing the spaces to tabs in the resulting snippet xml. (default: false)" />
+		<attribute name="package"             default=""            description="Add the output files to a ${package}.sublime-package file. (default: '' (disabled))" />
 		
 		<sequential>
 			<!-- clean -->
@@ -27,6 +28,17 @@
 			<tm2subl-snippet destdir="@{destdir}" transformer="@{snippet-transformer}" convert-to-tabs="@{convert-to-tabs}">
 				<fileset dir="@{srcdir}" includes="**/*.tmSnippet" />
 			</tm2subl-snippet>
+			
+			
+			<!-- package it -->
+			<local name="do-package" />
+			<condition property="do-package" value="." else="**">
+				<equals arg1="" arg2="@{package}" trim="true" forcestring="true" />
+			</condition>
+			
+			<zip destfile="@{package}.sublime-package" whenempty="skip">
+				<fileset dir="@{destdir}" includes="${do-package}" />
+			</zip>
 		</sequential>
 	</macrodef>
 	
