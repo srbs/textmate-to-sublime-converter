@@ -19,8 +19,8 @@
 			<!-- copy non-snippets -->
 			<copy todir="@{destdir}" flatten="true" includeEmptyDirs="false">
 				<fileset dir="@{srcdir}" >
-					<exclude name="**/*.plist" />
-					<exclude name="**/*.tmSnippet" />
+					<include name="**/*.tmLanguage" />
+					<include name="**/*.tmPreferences" />
 				</fileset>
 			</copy>
 			
