@@ -10,22 +10,22 @@
 		
 		<sequential>
 			<!-- clean -->
-			<delete dir="@{srcdir}" />
+			<delete dir="@{destdir}" />
 			
 			<!-- mkdir -->
-			<mkdir dir="@{srcdir}" />
+			<mkdir dir="@{destdir}" />
 			
 			<!-- copy non-snippets -->
-			<copy todir="@{srcdir}" flatten="true" includeEmptyDirs="false">
-				<fileset dir="@{destdir}" >
+			<copy todir="@{destdir}" flatten="true" includeEmptyDirs="false">
+				<fileset dir="@{srcdir}" >
 					<exclude name="**/*.plist" />
 					<exclude name="**/*.tmSnippet" />
 				</fileset>
 			</copy>
 			
 			<!-- transform & copy all snippets -->
-			<tm2subl-snippet destdir="@{srcdir}" transformer="@{snippet-transformer}" convert-to-tabs="@{convert-to-tabs}">
-				<fileset dir="@{destdir}" includes="**/*.tmSnippet" />
+			<tm2subl-snippet destdir="@{destdir}" transformer="@{snippet-transformer}" convert-to-tabs="@{convert-to-tabs}">
+				<fileset dir="@{srcdir}" includes="**/*.tmSnippet" />
 			</tm2subl-snippet>
 		</sequential>
 	</macrodef>
