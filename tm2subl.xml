@@ -1,47 +1,40 @@
 <project basedir="." default="default" name="Textmate to Sublime Transformer">
-	
-	<target name="default">
-		<tm2subl textmate-src="TextMate" sublime-out="Sublime Text" snippet-transform-file="tm2subl.xsl" convert-to-tabs="true" />
-		<!--<tm2subl-snippet destdir="sublout" transformer="tm2subl.xsl" convert-to-tabs="true">
-			<fileset dir="TextMate/Snippets" includes="*.tmSnippet" />
-		</tm2subl-snippet>-->
-	</target>
-	
 	<macrodef name="tm2subl" description="This converts one (1) TextMate Bundle into one (1) Sublime Text Package.">
-		<attribute name="textmate-src"                   description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'." />
-		<attribute name="sublime-out"                    description="The root folder to put the Sublime Text files." />
-		<attribute name="snippet-transform-file"         description="The file that transforms the snippets." />
-		<attribute name="convert-to-tabs" default="true" description="Setting for changing the spaces to tabs in the resulting snippet xml. (default: true)" />
-		<!--Maybe one day support multiple tm bundles? <element   name="srcfiles"       implicit="true" description="" />-->
+		<attribute name="destdir"                                   description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'." />
+		<attribute name="srcdir"                                    description="The root folder to put the Sublime Text files." />
+		<attribute name="snippet-transformer" default="tm2subl.xsl" description="The file that transforms the snippets." />
+		<attribute name="convert-to-tabs"     default="true"        description="Setting for changing the spaces to tabs in the resulting snippet xml. (default: true)" />
 		
 		<sequential>
 			<!-- clean -->
-			<delete dir="@{sublime-out}" />
+			<delete dir="@{srcdir}" />
 			
 			<!-- mkdir -->
-			<mkdir dir="@{sublime-out}" />
+			<mkdir dir="@{srcdir}" />
 			
 			<!-- copy non-snippets -->
-			<copy todir="@{sublime-out}" flatten="true" includeEmptyDirs="false">
-				<fileset dir="@{textmate-src}" >
+			<copy todir="@{srcdir}" flatten="true" includeEmptyDirs="false">
+				<fileset dir="@{destdir}" >
 					<exclude name="**/*.plist" />
 					<exclude name="**/*.tmSnippet" />
 				</fileset>
 			</copy>
 			
-			<tm2subl-snippet destdir="@{sublime-out}" transformer="@{snippet-transform-file}" convert-to-tabs="@{convert-to-tabs}" flatten="false">
-				<fileset dir="@{textmate-src}" includes="**/*.tmSnippet" />
+			<!-- transform & copy all snippets -->
+			<tm2subl-snippet destdir="@{srcdir}" transformer="@{snippet-transformer}" convert-to-tabs="@{convert-to-tabs}" flatten="false">
+				<fileset dir="@{destdir}" includes="**/*.tmSnippet" />
 			</tm2subl-snippet>
 		</sequential>
 	</macrodef>
 	
-	<macrodef name="tm2subl-snippet"                      description="This converts TextMate snippets into Sublime Text snippets">
-		<attribute name="destdir"                         description="The destination directory the Sublime Text snippets go in." />
-		<attribute name="transformer"                     description="The XSLT file that transforms the snippet." />
-		<attribute name="convert-to-tabs" default="false" description="Setting for converting the spaces in the snippet xml to tabs. (default: false)" />
-		<attribute name="force"           default="false" description="Recreate target files regardless on if they are newer than their source file." />
-		<attribute name="flatten"         default="true"  description="Flatten the hierarchy " />
-		<element   name="files"          implicit="yes"   description="A list of TextMate snippet files to convert." />
+	<macrodef name="tm2subl-snippet"                            description="This converts TextMate snippets into Sublime Text snippets">
+		<attribute name="destdir"                               description="The destination directory the Sublime Text snippets go in." />
+		<attribute name="transformer"     default="tm2subl.xsl" description="The XSLT file that transforms the snippet." />
+		<attribute name="convert-to-tabs" default="false"       description="Setting for converting the spaces in the snippet xml to tabs. (default: false)" />
+		<attribute name="force"           default="false"       description="Recreate target files regardless on if they are newer than their source file." />
+		<attribute name="flatten"         default="true"        description="Flatten the hierarchy " />
+		<!-- for nested fileset's -->
+		<element   name="files"          implicit="yes"         description="A list of TextMate snippet files to convert." />
 		
 		<sequential>
 			<!-- time stuff used to only apply the convert-to-tabs setting to newly created files -->
@@ -59,6 +52,7 @@
 			
 			
 			<local name="maptype" />
+			<!-- if user wanted flatten, use flatten below, other qise, do nothing (aka identity) -->
 			<condition property="maptype" value="flatten" else="identity">
 				<istrue value="@{flatten}" />
 			</condition>
