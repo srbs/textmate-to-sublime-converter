@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xalan="http://xml.apache.org/xalan" exclude-result-prefixes="xalan uuid" xmlns:uuid="java.util.UUID">
-	<!-- This XSL stylesheet converts TextMate Snippet (*.tmSnippet) files into Sublime Text Snippet (*sublime-snippet) files. -->
+	<!-- This XSL stylesheet converts Sublime Text Snippet (*sublime-snippet) files into TextMate Snippet (*.tmSnippet) files. -->
 	<xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="no"
 		xalan:indent-amount="4"
 		doctype-public="-//Apple//DTD PLIST 1.0//EN"
