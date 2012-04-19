@@ -1,7 +1,9 @@
 <!-- (C) 2012 David "srbs" Forrest, ZLIB license -->
 <!-- somerandombystander (at) gmail (dot) com -->
 <!-- http://www.opensource.org/licenses/zlib-license.php -->
-<project basedir="." name="TextMate to Sublime Transformer">
+<project basedir="." name="Sublime to TextMate Transformer">
+<!-- if you want to change the projectname, you need to change it on line 73 also -->
+	
 	<macrodef name="subl2tm" description="This converts one (1) Sublime Text Package into one (1) TextMate Bundle.">
 		<attribute name="destdir"                                   description="The root folder to put the TextMate Bundle files, usually ending in '*.tmbundle'." />
 		<attribute name="srcdir"                                    description="The root folder for the Sublime Text files." />
@@ -56,14 +58,37 @@
 			<mkdir dir="@{destdir}" />
 			
 			
+			<!-- xslt transform settings -->
 			<local name="maptype" />
 			<!-- if user wanted flatten, use flatten below, other qise, do nothing (aka identity) -->
 			<condition property="maptype" value="flatten" else="identity">
 				<istrue value="@{flatten}" />
 			</condition>
 			
+			<!-- verify xslt file exists, if not.. check for default, if that one doesn't exist,
+			     keep the original file to show a proper error message
+			      
+			     generally this will only work for the default value, but is done non-the-less -->
+			<local name="ant-file-dir" />
+			<dirname property="ant-file-dir" file="${ant.file.Sublime to TextMate Transformer}" />
+			
+			<local name="xsl-default" />
+			<property name="xsl-default" value="${ant-file-dir}/@{transformer}" />
+			
+			<local name="xsl-file" />
+			<condition property="xsl-file" value="${xsl-default}" else="@{transformer}">
+				<and>
+					<not>
+						<available file="@{transformer}" />
+					</not>
+					<available file="${xsl-default}" />
+				</and>
+				<!-- xsl-file = (!transformer.exists() && xsl-default.exists())? xsl-default: transformer -->
+			</condition>
+			
+			
 			<!-- copy & transform snippets -->
-			<xslt destdir="@{destdir}" style="@{transformer}" force="@{force}">
+			<xslt destdir="@{destdir}" style="${xsl-file}" force="@{force}">
 				<files/>
 				<!-- flatten & change extension -->
 				<chainedmapper>
@@ -77,8 +102,8 @@
 			
 			<!-- Read the file & find out how many spaces are at the beginning of the lines. -->
 			<local name="quantity" />
-			<loadfile property="quantity" srcfile="@{transformer}">
-				<!-- get the number of spaces the transformer is set to create -->
+			<loadfile property="quantity" srcfile="${xsl-file}">
+				<!-- get the number of spaces the transformer(xsl-file) is set to create -->
 				<filterchain>
 					<!-- get only the line containing the indent-amount setting -->
 					<linecontainsregexp>

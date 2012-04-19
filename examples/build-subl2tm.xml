@@ -2,11 +2,11 @@
 	<include file="../subl2tm.xml" />
 	
 	<target name="all">
-		<subl2tm srcdir="Sublime Text" destdir="TextMate" snippet-transformer="../subl2tm.xsl" />
+		<subl2tm srcdir="Sublime Text" destdir="TextMate" />
 	</target>
 	
 	<target name="snippetsonly">
-		<subl2tm-snippet destdir="TextMate/Snippets" flatten="true" convert-to-tabs="true" transformer="../subl2tm.xsl">
+		<subl2tm-snippet destdir="TextMate/Snippets" flatten="true" convert-to-tabs="true">
 			<fileset dir="Sublime Text" includes="**/*.sublime-snippet" />
 		</subl2tm-snippet>
 	</target>
