@@ -17,8 +17,8 @@ Prerequisites
 
 1. To use only the XSL Transformation files (*.xsl),
 	* tm2subl:
-		*	Any XSLT processor will work. [Mac & Linux come with a command built in][xsltproc],
-			while [Windows needs a download][xsltproc-win].
+		*	Any XSLT processor will work. [Mac & Linux][xsltproc] come with a command built in,
+			while [Windows][xsltproc-win] needs a download.
 			
 			More information on this command, see [xmlsoft][xmlsoft]
 			or [installing instructions][install-xslt].
@@ -26,7 +26,7 @@ Prerequisites
 		*	When converting to TextMate, I have the transformer create a UUID for TextMate to use,
 			this requires a more advanced XSLT implementation than is given above.
 			
-			[Apache xalan][xalan]works without any
+			[Apache xalan][xalan] works without any
 			xsl file edits. (This is what is used inside of Ant.)
 			
 			[Saxon][saxon] should work with one edit of the file:
