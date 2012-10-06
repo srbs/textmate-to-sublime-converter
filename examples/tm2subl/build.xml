@@ -1,5 +1,5 @@
 <project basedir="." default="all" name="Textmate bundle to Sublime Text package transformer">
-	<include file="../tm2subl.xml" />
+	<include file="../../tm2subl.xml" />
 	
 	<target name="all">
 		<tm2subl destdir="Sublime Text" srcdir="TextMate" />

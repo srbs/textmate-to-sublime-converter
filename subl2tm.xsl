@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xalan="http://xml.apache.org/xalan" exclude-result-prefixes="xalan uuid" xmlns:uuid="java.util.UUID">
-	<!-- This XSL stylesheet converts Sublime Text Snippet (*sublime-snippet) files into TextMate Snippet (*.tmSnippet) files. -->
-	<xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="no"
-		xalan:indent-amount="4"
+	<!-- This XSL stylesheet converts Sublime Text Snippet (*.sublime-snippet) files into TextMate Snippet (*.tmSnippet) files. -->
+	<xsl:output method="xml" encoding="UTF-8" indent="yes" xalan:indent-amount="4" omit-xml-declaration="no"
 		doctype-public="-//Apple//DTD PLIST 1.0//EN"
 		doctype-system="http://www.apple.com/DTDs/PropertyList-1.0.dtd" 
 	/>
