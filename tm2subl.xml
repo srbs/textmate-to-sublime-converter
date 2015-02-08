@@ -1,4 +1,4 @@
-<!-- (C) 2012 David "srbs" Forrest, ZLIB license -->
+<!-- (C) 2012-2015 David "srbs" Forrest, ZLIB license -->
 <!-- somerandombystander (at) gmail (dot) com -->
 <!-- http://www.opensource.org/licenses/zlib-license.php -->
 <project basedir="." name="TextMate to Sublime Transformer">
@@ -6,7 +6,7 @@
 	
 	<macrodef name="tm2subl" description="This converts one (1) TextMate Bundle into one (1) Sublime Text Package.">
 		<attribute name="destdir"                                   description="The root folder to put the Sublime Text files." />
-		<attribute name="srcdir"                                    description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'.." />
+		<attribute name="srcdir"                                    description="The root folder for the TextMate Bundle, usually ending in '*.tmbundle'." />
 		<attribute name="snippet-transformer" default="tm2subl.xsl" description="The file that transforms the snippets. (default: tm2subl.xsl)" />
 		<attribute name="convert-to-tabs"     default="false"       description="Setting for changing the spaces to tabs in the resulting snippet xml. (default: false)" />
 		<attribute name="package"             default=""            description="Add the output files to a ${package}.sublime-package file. (default: '' (disabled))" />
@@ -144,18 +144,18 @@
 			<!-- Here we set the value of ${convert} to be '' when the user wants to replace the values -->
 			<!-- Otherwise (else) set it to 'fail' do not replace the values -->
 			<condition property="convert" value="" else="fail">
-					<and>
-						<!-- ONLY true/t values are accepted as true -->
-						<or>
-							<equals arg1="true" arg2="@{convert-to-tabs}" casesensitive="false" trim="true" forcestring="true" />
-							<equals arg1="t"    arg2="@{convert-to-tabs}" casesensitive="false" trim="true" forcestring="true" />
-						</or>
-						
-						<!-- Check to make sure there actually is a non-zero quantity in the file -->
-						<not>
-							<equals arg1="0" arg2="${quantity}" />
-						</not>
-					</and>
+				<and>
+					<!-- ONLY true/t values are accepted as true -->
+					<or>
+						<equals arg1="true" arg2="@{convert-to-tabs}" casesensitive="false" trim="true" forcestring="true" />
+						<equals arg1="t"    arg2="@{convert-to-tabs}" casesensitive="false" trim="true" forcestring="true" />
+					</or>
+					
+					<!-- Check to make sure there actually is a non-zero quantity in the file -->
+					<not>
+						<equals arg1="0" arg2="${quantity}" />
+					</not>
+				</and>
 				
 				<!--convert = (convert-to-tabs==true && (quantity > 0))? "": "fail"-->
 			</condition>
@@ -166,7 +166,7 @@
 			<!-- The only downfall of not using targets/depends or ant-contib if is that the
 			     loadfile & replaceregexp tasks have to executed no matter what. -->
 			
-			<!--<echo message="Check for existance for non-true & non-existance for true: -${convert}-" />-->     
+			<!--<echo message="Check for existance for non-true & non-existance for true: -${convert}-" />-->
 			
 			
 			<!-- Replace the spaces with tabs. -->

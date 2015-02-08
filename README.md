@@ -61,7 +61,7 @@ Usage
 License
 -------
 
-	Copyright (c) 2012 David "srbs" Forrest
+	Copyright (c) 2012-2015 David "srbs" Forrest
 	
 	This software is provided 'as-is', without any express or implied
 	warranty. In no event will the authors be held liable for any damages

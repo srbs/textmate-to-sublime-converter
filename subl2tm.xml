@@ -1,4 +1,4 @@
-<!-- (C) 2012 David "srbs" Forrest, ZLIB license -->
+<!-- (C) 2012-2015 David "srbs" Forrest, ZLIB license -->
 <!-- somerandombystander (at) gmail (dot) com -->
 <!-- http://www.opensource.org/licenses/zlib-license.php -->
 <project basedir="." name="Sublime to TextMate Transformer">
@@ -134,18 +134,18 @@
 			<!-- Here we set the value of ${convert} to be '' when the user wants to replace the values -->
 			<!-- Otherwise (else) set it to 'fail' do not replace the values -->
 			<condition property="convert" value="" else="fail">
-					<and>
-						<!-- ONLY true/t values are accepted as true -->
-						<or>
-							<equals arg1="true" arg2="@{convert-to-tabs}" casesensitive="false" trim="true" forcestring="true" />
-							<equals arg1="t"    arg2="@{convert-to-tabs}" casesensitive="false" trim="true" forcestring="true" />
-						</or>
-						
-						<!-- Check to make sure there actually is a non-zero quantity in the file -->
-						<not>
-							<equals arg1="0" arg2="${quantity}" />
-						</not>
-					</and>
+				<and>
+					<!-- ONLY true/t values are accepted as true -->
+					<or>
+						<equals arg1="true" arg2="@{convert-to-tabs}" casesensitive="false" trim="true" forcestring="true" />
+						<equals arg1="t"    arg2="@{convert-to-tabs}" casesensitive="false" trim="true" forcestring="true" />
+					</or>
+					
+					<!-- Check to make sure there actually is a non-zero quantity in the file -->
+					<not>
+						<equals arg1="0" arg2="${quantity}" />
+					</not>
+				</and>
 				
 				<!--convert = (convert-to-tabs==true && (quantity > 0))? "": "fail"-->
 			</condition>
@@ -156,7 +156,7 @@
 			<!-- The only downfall of not using targets/depends or ant-contib if is that the
 			     loadfile & replaceregexp tasks have to executed no matter what. -->
 			
-			<!--<echo message="Check for existance for non-true & non-existance for true: -${convert}-" />-->     
+			<!--<echo message="Check for existance for non-true & non-existance for true: -${convert}-" />-->
 			
 			
 			<!-- Replace the spaces with tabs. -->
@@ -183,8 +183,8 @@
 		<attribute name="property" />
 		<![CDATA[
 			importClass(java.util.UUID);
-
-			project.setProperty(attributes.get( "property"), UUID.randomUUID().toUpperCase());
+			
+			project.setProperty(attributes.get("property"), UUID.randomUUID().toUpperCase());
 		]]>
 	</scriptdef>
 	-->
