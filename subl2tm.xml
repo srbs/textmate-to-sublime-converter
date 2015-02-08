@@ -12,8 +12,17 @@
 		<!-- no package here, its a dir-folder -->
 		
 		<sequential>
-			<!-- clean -->
-			<delete dir="@{destdir}" />
+			<local name="warningtext" />
+			<condition property="warningtext" value="${line.separator}Warning: Destination directory is not empty, may cause undesired effects." else="">
+				<and>
+					<available file="@{destdir}" type="dir" />
+					
+					<resourcecount when="greater" count="0">
+						<fileset dir="@{destdir}" />
+					</resourcecount>
+				</and>
+			</condition>
+			<echo message="Converting Sublime Text package to a TextMate bundle. (@{srcdir} -> @{destdir})${warningtext}" />
 			
 			<!-- mkdir -->
 			<mkdir dir="@{destdir}" />
