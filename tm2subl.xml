@@ -50,6 +50,7 @@
 		<attribute name="convert-to-tabs" default="false"       description="Setting for converting the spaces in the snippet xml to tabs. (default: false)" />
 		<attribute name="force"           default="false"       description="Recreate target files regardless on if they are newer than their source file. (default: false)" />
 		<attribute name="flatten"         default="true"        description="Flatten the hierarchy. (default: true)" />
+		<attribute name="scandirs"        default="false"       description="Transform all files in included directories. (default: false)" />
 		<!-- for nested fileset's -->
 		<element   name="files"          implicit="yes"         description="A list of TextMate snippet files to convert." />
 		
@@ -98,8 +99,9 @@
 			
 			
 			<!-- copy & transform snippets -->
-			<xslt destdir="@{destdir}" style="${xsl-file}" force="@{force}">
-				<files/>
+			<xslt destdir="@{destdir}" style="${xsl-file}" force="@{force}"
+			        useImplicitFileset="false" scanincludedirectories="@{scandirs}">
+				<files />
 				<!-- flatten & change extension -->
 				<chainedmapper>
 					<mapper type="${maptype}" />
