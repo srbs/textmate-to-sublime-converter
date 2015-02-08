@@ -90,7 +90,7 @@
 			
 			<!-- copy & transform snippets -->
 			<xslt destdir="@{destdir}" style="${xsl-file}" force="@{force}"
-			        useImplicitFileset="false" scanincludedirectories="@{scandirs}">
+			        useImplicitFileset="false" scanincludeddirectories="@{scandirs}">
 				<files />
 				<!-- flatten & change extension -->
 				<chainedmapper>
